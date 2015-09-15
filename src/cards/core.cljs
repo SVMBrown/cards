@@ -1,6 +1,30 @@
 (ns cards.core
   (:require [quil.core :as q :include-macros true]
-            [quil.middleware :as m]))
+            [quil.middleware :as m]
+            [cljs.pprint :as pp]))
+
+(def suits #{{:suit :diamonds}
+             {:suit :clubs}
+             {:suit :hearts}
+             {:suit :spades}})
+
+(def faces #{{:face :ace}
+             {:face :two}
+             {:face :three}
+             {:face :four}
+             {:face :five}
+             {:face :six}
+             {:face :seven}
+             {:face :eight}
+             {:face :nine}
+             {:face :ten}
+             {:face :jack}
+             {:face :queen}
+             {:face :king}})
+
+(defn deck [n]
+  (let [standard-deck (clojure.set/join faces suits)]
+    (shuffle (apply concat (repeatedly n #(shuffle (vec standard-deck)))))))
 
 (defn setup []
   ; Set frame rate to 30 frames per second.
